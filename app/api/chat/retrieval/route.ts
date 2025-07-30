@@ -12,6 +12,7 @@ import {
   BytesOutputParser,
   StringOutputParser,
 } from "@langchain/core/output_parsers";
+import { AGENT_CONFIG } from "@/app/config";
 
 export const runtime = "edge";
 
@@ -75,7 +76,7 @@ export async function POST(req: NextRequest) {
     const currentMessageContent = messages[messages.length - 1].content;
 
     const model = new ChatOpenAI({
-      model: "gpt-4o-mini",
+      ...AGENT_CONFIG,
       temperature: 0.2,
     });
 

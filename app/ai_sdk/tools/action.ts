@@ -7,6 +7,7 @@ import { z } from "zod";
 import { Runnable } from "@langchain/core/runnables";
 import { zodToJsonSchema } from "zod-to-json-schema";
 import { JsonOutputKeyToolsParser } from "@langchain/core/output_parsers/openai_tools";
+import { AGENT_CONFIG } from "@/app/config";
 
 const Weather = z
   .object({
@@ -35,10 +36,7 @@ export async function executeTool(
       ["human", "{input}"],
     ]);
 
-    const llm = new ChatOpenAI({
-      model: "gpt-4o-mini",
-      temperature: 0,
-    });
+    const llm = new ChatOpenAI(AGENT_CONFIG);
 
     let chain: Runnable;
 

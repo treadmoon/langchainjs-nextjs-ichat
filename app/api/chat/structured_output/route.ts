@@ -4,6 +4,7 @@ import { z } from "zod";
 
 import { ChatOpenAI } from "@langchain/openai";
 import { PromptTemplate } from "@langchain/core/prompts";
+import { AGENT_CONFIG } from "@/app/config";
 
 export const runtime = "edge";
 
@@ -33,7 +34,7 @@ export async function POST(req: NextRequest) {
      */
     const model = new ChatOpenAI({
       temperature: 0.8,
-      model: "gpt-4o-mini",
+      ...AGENT_CONFIG,
     });
 
     /**

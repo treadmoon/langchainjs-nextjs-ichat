@@ -12,6 +12,7 @@ import {
   HumanMessage,
   SystemMessage,
 } from "@langchain/core/messages";
+import { AGENT_CONFIG } from "@/app/config";
 
 export const runtime = "edge";
 
@@ -66,7 +67,7 @@ export async function POST(req: NextRequest) {
     // You can remove this or use a different tool instead.
     const tools = [new Calculator(), new SerpAPI()];
     const chat = new ChatOpenAI({
-      model: "gpt-4o-mini",
+      ...AGENT_CONFIG,
       temperature: 0,
     });
 

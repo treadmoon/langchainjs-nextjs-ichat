@@ -14,6 +14,7 @@ import {
 import { ChatOpenAI, OpenAIEmbeddings } from "@langchain/openai";
 import { createRetrieverTool } from "langchain/tools/retriever";
 import { createReactAgent } from "@langchain/langgraph/prebuilt";
+import { AGENT_CONFIG } from "@/app/config";
 
 export const runtime = "edge";
 
@@ -68,7 +69,7 @@ export async function POST(req: NextRequest) {
     const returnIntermediateSteps = body.show_intermediate_steps;
 
     const chatModel = new ChatOpenAI({
-      model: "gpt-4o-mini",
+      ...AGENT_CONFIG,
       temperature: 0.2,
     });
 

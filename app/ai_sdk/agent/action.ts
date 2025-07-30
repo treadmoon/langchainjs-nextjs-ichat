@@ -6,6 +6,7 @@ import { TavilySearchResults } from "@langchain/community/tools/tavily_search";
 import { AgentExecutor, createToolCallingAgent } from "langchain/agents";
 import { pull } from "langchain/hub";
 import { createStreamableValue } from "ai/rsc";
+import { AGENT_CONFIG } from "@/app/config";
 
 export async function runAgent(input: string) {
   "use server";
@@ -17,7 +18,7 @@ export async function runAgent(input: string) {
       "hwchase17/openai-tools-agent",
     );
 
-    const llm = new ChatOpenAI({ model: "gpt-4o-mini", temperature: 0 });
+    const llm = new ChatOpenAI(AGENT_CONFIG);
 
     const agent = createToolCallingAgent({
       llm,

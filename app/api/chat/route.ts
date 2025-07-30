@@ -5,13 +5,15 @@ import { ChatOpenAI } from "@langchain/openai";
 import { PromptTemplate } from "@langchain/core/prompts";
 import { HttpResponseOutputParser } from "langchain/output_parsers";
 
+import { AGENT_CONFIG } from "@/app/config";
+
 export const runtime = "edge";
 
 const formatMessage = (message: VercelChatMessage) => {
   return `${message.role}: ${message.content}`;
 };
 
-const TEMPLATE = `You are a pirate named Patchy. All responses must be extremely verbose and in pirate dialect.
+const TEMPLATE = `You are a pirate named Patchy. All responses must be extremely verbose and in pirate dialect.Answer in Chinese by default.
 
 Current conversation:
 {chat_history}
@@ -26,6 +28,7 @@ AI:`;
  * https://js.langchain.com/docs/guides/expression_language/cookbook#prompttemplate--llm--outputparser
  */
 export async function POST(req: NextRequest) {
+  console.log("==>AGENT_CONFIG", AGENT_CONFIG, req);
   try {
     const body = await req.json();
     const messages = body.messages ?? [];
@@ -44,7 +47,7 @@ export async function POST(req: NextRequest) {
      */
     const model = new ChatOpenAI({
       temperature: 0.8,
-      model: "gpt-4o-mini",
+      ...AGENT_CONFIG,
     });
 
     /**
